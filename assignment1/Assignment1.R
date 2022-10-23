@@ -63,7 +63,7 @@ info <- list(x = c(5, 6, 7, 8), y = c("a", "b", "c", "d"))
 info$y <- c(1, 2, 3, 4)
 mean_x <- mean(info$x)
 mean_y <- mean(info$y)
-sapply(info, mean)
+mean_both <- sapply(info, mean)
 
 log_x <- log(info$x)
 log_x <- list(logx = c(log_x))
@@ -86,6 +86,6 @@ a_h_words <- words[a_h_words<= 'h']
 a_h_words
 
 #Extracting depending on the last character
-h_y_words <- substring(words,nchar(words)-1+1, nchar(words))
+h_y_words <- substring(words,nchar(words), nchar(words))
 h_y_words <- words[h_y_words<= 'y' & h_y_words>= 'h']
 h_y_words
