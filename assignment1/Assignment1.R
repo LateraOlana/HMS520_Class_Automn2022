@@ -40,14 +40,16 @@ summary
 log_rivers <- sort(log_rivers)
 log_rivers
 
-#Extracting highest and lowest
+#Removing highest and lowest from log_rivers
 n <- length(rivers)-10
 lowest <- log_rivers[c(1:10)]
 lowest
 highest <- log_rivers[-c(1:n)]
 highest
-trimmed_log_rivers <- c(lowest, highest)
+
+trimmed_log_rivers <- log_rivers[! (log_rivers%in% lowest | log_rivers%in% highest)]
 trimmed_log_rivers
+
 
 #Summary for trimmed summary
 trimmed_summary <- c(length = length(trimmed_log_rivers), sum = sum(trimmed_log_rivers), median = median(trimmed_log_rivers), mean = mean(trimmed_log_rivers), minimum = min(trimmed_log_rivers), maximum = max(trimmed_log_rivers), sd = sd(trimmed_log_rivers))
