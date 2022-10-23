@@ -31,7 +31,7 @@ is.list(rivers)
 typeof(rivers) 
 
 log_rivers <- log10(rivers)
-summary <- c(length = length(rivers), sum = sum(rivers), median = median(rivers), mean = mean(rivers), minimum = min(rivers), maximum = max(rivers), sd = sd(rivers))
+summary <- c(length = length(log_rivers), sum = sum(log_rivers), median = median(log_rivers), mean = mean(log_rivers), minimum = min(log_rivers), maximum = max(log_rivers), sd = sd(log_rivers))
 summary
 names(summary) <- c("Length","Summation", "Median","Mean","Minimum","Maximum","Standard Devition")
 summary
