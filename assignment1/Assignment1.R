@@ -18,9 +18,18 @@ vec5 <- seq(0, 1, by=0.01)
 
 #Work on data rivers
 data("rivers")
-is.vector(rivers) # Returned True, so the data type is vector
-is.list(rivers) # Returned False
-typeof(rivers) # Returned double
+# The following line of code checks if the rivers data-type is vector or not.
+#Accordingly, it returns True if it is vector, false if not. In this case
+# it returned True, implying rivers is a vector.
+is.vector(rivers)
+# The following line of code checks if the rivers data-type is list or not.
+#Accordingly, it returns True if it is list, false if not. In this case
+# it returned False, implying rivers is not a list.
+is.list(rivers)
+# The following line of code returns variable types of rivers elements.
+#Accordingly, it returned double implying elements of rivers are double.
+typeof(rivers) 
+
 log_rivers <- log10(rivers)
 summary <- c(length = length(rivers), sum = sum(rivers), median = median(rivers), mean = mean(rivers), minimum = min(rivers), maximum = max(rivers), sd = sd(rivers))
 summary
