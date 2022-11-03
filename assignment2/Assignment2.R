@@ -1,3 +1,4 @@
+library(dplyr)
 #Q1: Creating function, which returns True if the variable is a string
 # False other wise.
 is_string <- function(x){
@@ -50,5 +51,31 @@ rmse <- function(x,na_rm){
 x<-rmse(c(1,2,3,'NA'),FALSE)
 x
 
+#Q4: Comparing strings
+describe_difference <- function(x,y){
+  if(!is.character (x)){
+    print("x must be a string")
+  }
+  else if(!is.character (y)){
+    print("y must be a string")
+  }
+  else{
+  length_x <- nchar(x)
+  length_y <- nchar(y)
+  diff <- length_x - length_y
+  invisible(diff)
+  if (diff > 0){
+    paste("Your first string is longer by", diff, "characters")
+  }
+  else if(diff < 0){
+    paste("Your second string is longer by", abs(diff), "characters")
+  }
+  else{
+    print("Your strings are the same length")
+  }
+  }
+}
+x<-"Rick"
+y<-"Morty"
+describe_difference(x,y)
 
-    
