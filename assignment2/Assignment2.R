@@ -35,7 +35,7 @@ x
 #Q3: Creating RMSE function
 rmse <- function(x,na_rm){
   if ((is.numeric(x) != TRUE)){
-    return("x must be a numeric vector")
+    stop("x must be a numeric vector")
   }
   else{
     if (na_rm == TRUE){
