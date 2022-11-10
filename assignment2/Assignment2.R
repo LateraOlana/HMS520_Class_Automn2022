@@ -54,10 +54,10 @@ x
 #Q4: Comparing strings
 describe_difference <- function(x,y){
   if(!is.character (x)){
-    print("x must be a string")
+    stop("x must be a string")
   }
   else if(!is.character (y)){
-    print("y must be a string")
+    stop("y must be a string")
   }
   else{
   length_x <- nchar(x)
