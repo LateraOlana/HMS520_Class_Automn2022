@@ -33,7 +33,7 @@ x <- my_cumsum(c(3,'d',2))
 x
 
 #Q3: Creating RMSE function
-rmse <- function(x,na_rm){
+rmse <- function(x,TRUE){
   if ((is.numeric(x) != TRUE)){
     stop("x must be a numeric vector")
   }
