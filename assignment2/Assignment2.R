@@ -2,7 +2,7 @@ library(dplyr)
 #Q1: Creating function, which returns True if the variable is a string
 # False other wise.
 is_string <- function(x){
-  if (length(x) == 1){
+  if (length(x) == 1 & is.character(x) == TRUE){
     return (TRUE)
   }
   else{
