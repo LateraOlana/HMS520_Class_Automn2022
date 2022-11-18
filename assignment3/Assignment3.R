@@ -26,6 +26,8 @@ rick_morty_glimpse(cases)
 rick_morty_glimpse(population)
 
 #Cleaning column names, I will create generic function to do that
+#I thought it would be much cleaner to have different variables and functions for every task
+#That way, I don't have rerun the code if the task required original data
 rick_morty_to_lower <- function(input_data){
   input_data %>% 
     rename_all(., .funs = tolower) ->
@@ -59,20 +61,7 @@ rick_morty_glimpse(cases_lowered_renamed)
 rick_morty_glimpse(population_lowered_renamed)
 
 #Function to change to required format of date
-#rick_morty_change_date <- function(input_data){
-  #Starts with 2
- # deaths_lowered_renamed_filtered <- select(input_data, starts_with("2"))
-  #print(tolist(deaths_lowered_renamed_filtered))
-  #input_data %>% 
-   # rename(deaths_lowered_renamed_filtered = ymd(deaths_lowered_renamed_filtered)
-    #) ->
-    #output_data
-  #return(output_data)
-#}
-
-#deaths_lowered_renamed_datechanged <- rick_morty_change_date(deaths_lowered_renamed)
-#cases_lowered_renamed_datechanged <- rick_morty_change_date(cases_lowered_renamed)
-
+#The dates are formatted correctly, but this function will correct it if it founds one.
 rick_morty_to_date <- function(input_data,vect){
   input_data %>% 
     rename_with(~ vect, all_of(as.character.Date(vect,format="%y-%m-%d"))
@@ -80,6 +69,7 @@ rick_morty_to_date <- function(input_data,vect){
     output_data
   return(output_data)
 }
+#I am changing the returned column names into vector as rename(~ vect, all_of(..)) code only understands vector :(
 vector_1_deaths <- names(deaths_lowered_renamed)      
 vector_1_deaths[5:length(vector_1_deaths)]
 
@@ -96,7 +86,8 @@ case_dates <- names(select(cases_lowered_renamed, starts_with("2")))
 case_dates
 
 #Aggregating Cases, Deaths and population
-#Wierd way of replacing cases
+
+#Weird way of replacing cases
 cases_x <- group_by(cases_lowered_renamed_datechanged, state)
 cases <- summarize_at(
   cases_x,
@@ -104,7 +95,8 @@ cases <- summarize_at(
   sum,
   na.rm = TRUE
 )
-#Wierd way of replacing deaths
+
+#Weird way of replacing deaths
 deaths_x <- group_by(deaths_lowered_renamed_datechanged, state)
 deaths <- summarize_at(
   deaths_x,
@@ -113,7 +105,7 @@ deaths <- summarize_at(
   na.rm = TRUE
 )
 
-#Wierd way of replacing population
+#Weird way of replacing population
 population_x <- group_by(population_lowered_renamed, state)
 population <- summarize_at(
   population_x,
@@ -172,8 +164,8 @@ count %>%
          new_deaths = pmax(new_deaths,0)) %>% 
   ungroup() ->
   count
-#Not fun way of doing it but, this replaces the NA with firsty element.
-#Note here the first element is 0
+#Not fun way of doing it but, this replaces the NA with first element.
+#Note here, the first element is 0
 count$new_cases[is.na(count$new_cases)] <- 0
 count$new_deaths[is.na(count$new_deaths)] <- 0
 glimpse(count)
@@ -185,7 +177,7 @@ count %>%
   ungroup() ->
   count
 
-#Case fatality proportion (fatality is not a rate)
+#Case fatality proportion (P.S: fatality is not a rate)
 count %>% 
   mutate(ifr = (cases/deaths)) %>% 
   ungroup() ->
@@ -196,8 +188,9 @@ count %>%
 #3: Some deaths, but no cases (Infinity): Physically impossible
 count$ifr[is.na(count$ifr)] <- 0
 count$ifr[is.infinite(count$ifr)] <- 0
+
 #I changed mr column to mr_per_100_000 to show the mortality is given per 100,000 population
-#The rationale behind doing so is the mortality rate is small
+#The rationale behind doing so is the mortality rate is very small
 count %>% 
   mutate(mr_per_100_000 = (deaths/population) * 100000) %>% 
   ungroup() ->
@@ -217,7 +210,7 @@ count_compare_per_state <- summarize_at(
 count_compare_per_state <- count_compare_per_state %>%
   arrange(-new_cases)
 count_compare_per_state$state[1:5]
-#The top five states with cases are: "CA" "TX" "FL" "NY" "IL"
+#The top five states with high cases are: "CA" "TX" "FL" "NY" "IL"
 
 count_compare_per_state <- count_compare_per_state %>%
   arrange(-new_deaths)
